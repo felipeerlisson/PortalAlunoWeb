@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PortalAlunoWeb_DataAccess.Dapper\PortalAlunoWeb_DataAccess.Dapper.csproj" />
+    <ProjectReference Include="..\PortalAlunoWeb_DOMAIN\PortalAlunoWeb_Domain.csproj" />
+    <ProjectReference Include="..\PortalAlunoWeb_Services\PortalAlunoWeb_Services.csproj" />
+  </ItemGroup>
+
+</Project>
