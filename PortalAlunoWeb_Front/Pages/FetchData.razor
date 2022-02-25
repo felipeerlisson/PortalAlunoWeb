@@ -1,4 +1,5 @@
 ﻿@page "/fetchdata"
+@using PortalAlunoWeb_Front.Data
 @inject HttpClient Http
 
 <PageTitle>Weather forecast</PageTitle>
@@ -36,6 +37,7 @@ else
     </table>
 }
 
+
 @code {
     private WeatherForecast[]? forecasts;
 
@@ -43,6 +45,8 @@ else
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
+
+   
 
     public class WeatherForecast
     {

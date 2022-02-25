@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalAlunoWeb_Api", "PortalAlunoWeb_API\PortalAlunoWeb_Api.csproj", "{73B6BB45-34F3-4875-89F5-93524DBD6371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalAlunoWeb_Api", "PortalAlunoWeb_API\PortalAlunoWeb_Api.csproj", "{73B6BB45-34F3-4875-89F5-93524DBD6371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalAlunoWeb_Domain", "PortalAlunoWeb_DOMAIN\PortalAlunoWeb_Domain.csproj", "{48CAAF1A-F2AB-4C5E-A711-F38D06C0D032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalAlunoWeb_Domain", "PortalAlunoWeb_DOMAIN\PortalAlunoWeb_Domain.csproj", "{48CAAF1A-F2AB-4C5E-A711-F38D06C0D032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalAlunoWeb_Services", "PortalAlunoWeb_Services\PortalAlunoWeb_Services.csproj", "{F60E7485-3171-49DF-8BFB-7B172F0113BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalAlunoWeb_Services", "PortalAlunoWeb_Services\PortalAlunoWeb_Services.csproj", "{F60E7485-3171-49DF-8BFB-7B172F0113BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalAlunoWeb_DataAccess.Dapper", "PortalAlunoWeb_DataAccess.Dapper\PortalAlunoWeb_DataAccess.Dapper.csproj", "{EFD89C5C-41AB-4EBA-9C44-995746FC9A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalAlunoWeb_DataAccess.Dapper", "PortalAlunoWeb_DataAccess.Dapper\PortalAlunoWeb_DataAccess.Dapper.csproj", "{EFD89C5C-41AB-4EBA-9C44-995746FC9A11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalAlunoWeb_Front", "PortalAlunoWeb_Front\PortalAlunoWeb_Front.csproj", "{55ACAA4B-8DF5-45FB-8D07-5564C720FAD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalAlunoWeb_Front", "PortalAlunoWeb_Front\PortalAlunoWeb_Front.csproj", "{55ACAA4B-8DF5-45FB-8D07-5564C720FAD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

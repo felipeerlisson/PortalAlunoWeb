@@ -1,0 +1,56 @@
+﻿@page "/Aluno"
+@using PortalAlunoWeb_Front.Data
+@inject HttpClient Http
+@inject NavigationManager navigation
+
+<PageTitle>Gestão de Alunos </PageTitle>
+
+<h3>Gestão de Alunos</h3>
+
+<p> Listagem de todos os alunos matriculados</p>
+
+ <button class="oi btn btn-success" @onclick="@(() => NovoAluno())">Novo</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var aluno in alunos)
+        {
+            <tr>
+                <td>@aluno.COD_ALUNO</td>
+                <td>@aluno.NOME_ALUNO</td>
+                <td>@aluno.IDADE_ALUNO</td>
+                <td>
+                    <button class="oi btn btn-warning"> Editar</button>
+                    <button class="oi btn btn-primary"> Excluir</button>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+
+    public List<Aluno> alunos = new List<Aluno>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        alunos = await Http.GetJsonAsync<List<Aluno>>("https://localhost:7126/api/aluno");
+    }
+
+    private void NovoAluno()
+    {
+        navigation.NavigateTo("/Aluno/Novo");
+    }
+
+
+}
