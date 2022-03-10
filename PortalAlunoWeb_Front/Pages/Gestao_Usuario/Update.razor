@@ -1,10 +1,26 @@
-﻿@page "/Aluno/Editar/{id}"
+﻿@using PortalAlunoWeb_Front.Data
+@page "/Aluno/Editar/{id}"
+@inject HttpClient http
 
 <h3>Editar Aluno</h3>
 
-<UsuarioForm></UsuarioForm>
+<UsuarioForm Aluno=@aluno></UsuarioForm>
 
 @code {
     [Parameter]
     public string Id { get; set; }
+
+    public Aluno aluno = new Aluno();
+
+    protected override async Task OnInitializedAsync()
+    {
+         await BuscarAlunoPorId();
+    }
+
+    public  async Task BuscarAlunoPorId()
+    {
+        aluno = await http.GetJsonAsync<Aluno>("https://localhost:7126/api/aluno/"+ Id);
+    }
+
+
 }

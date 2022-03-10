@@ -1,9 +1,9 @@
 ﻿@page "/Aluno/Novo"
-
+@using PortalAlunoWeb_Front.Data
 <h3>Novo Aluno</h3>
 
-<UsuarioForm></UsuarioForm>
+<UsuarioForm Aluno=@aluno></UsuarioForm>
 
 @code {
-
+    public Aluno aluno = new Aluno();
 }

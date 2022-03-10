@@ -25,6 +25,28 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             }
         }
 
+        public async Task<Aluno> BuscarAlunoPorId(int Id)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+
+                    string query = @"SELECT * FROM ALUNO WHERE COD_ALUNO = @Id";
+
+                    dbConnection.Close();
+                    return await dbConnection.QueryFirstAsync<Aluno>(query, new { Id = @Id});
+                }
+
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Aluno>> BuscarTodosAluno()
         {
             try
@@ -35,6 +57,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
 
                     string query = @"SELECT * FROM ALUNO";
 
+                    dbConnection.Close();
                     return (List<Aluno>)await dbConnection.QueryAsync<Aluno>(query);
                 }
                     
@@ -47,9 +70,41 @@ namespace PortalAlunoWeb_DataAccess.Dapper
       
         }
 
-        public void ExcluirAluno(int ID_Aluno)
+        public void ExcluirAluno(int COD_ALUNO)
         {
-            throw new NotImplementedException();
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+
+                string query = @"DELETE ALUNO WHERE COD_ALUNO = @COD_ALUNO";
+
+                dbConnection.Close();
+
+                dbConnection.Execute(query, new { COD_ALUNO = @COD_ALUNO });
+            }
+        }
+
+        public void SalvarAluno(Aluno aluno)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+
+                    string query = @"INSERT INTO ALUNO (NOME_ALUNO, IDADE_ALUNO) VALUES (@NOME_ALUNO, @IDADE_ALUNO)";
+
+                    dbConnection.Close();
+
+                    dbConnection.Execute(query,aluno);
+                }
+
+
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -1,23 +1,25 @@
 ﻿@using PortalAlunoWeb_Front.Data
+@inject HttpClient http
+@inject NavigationManager navigation
 
 <div class="container">
-    <EditForm Model="@Aluno" OnValidSubmit="OnSubmitForm">
+    <EditForm Model="@Aluno" OnValidSubmit="SalvarAluno">
         <div class="form-group">
             <Field Class="col col-4">
                 <FieldLabel>Nome: </FieldLabel>
-                <TextEdit />
+                <TextEdit @bind-Text="Aluno.NOME_ALUNO" />
             </Field>
         </div>
 
         <div class="form-group">
             <Field Class="col col-4">
                 <FieldLabel>Idade: </FieldLabel>
-                <Blazorise.NumericEdit Value="123" />
+                <Blazorise.NumericEdit @bind-Value="Aluno.IDADE_ALUNO" />
             </Field>
         </div>
 
         <div class="form-group" py-2>
-            <Button Color="Color.Secondary" Active>Voltar</Button>
+            <Button Color="Color.Secondary" Active @onclick="VoltarAluno">Voltar</Button>
             <button class="btn btn-primary" type="submit">Salvar </button>
 
         </div>
@@ -26,11 +28,21 @@
 </div>
 
 @code {
-    public Aluno Aluno = new Aluno();
+    [Parameter]
+    public Aluno Aluno { get; set; }
 
-
-    private void OnSubmitForm()
+    protected override async Task OnInitializedAsync()
     {
+       Console.WriteLine("chegou aqui");
+    }
+    private void SalvarAluno()
+    {
+        http.PostJsonAsync("https://localhost:7126/api/aluno", Aluno);
+        navigation.NavigateTo("Aluno");
+    }
 
+    void VoltarAluno()
+    {
+        navigation.NavigateTo("Aluno");
     }
 }

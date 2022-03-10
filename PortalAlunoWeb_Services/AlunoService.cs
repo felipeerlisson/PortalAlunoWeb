@@ -17,9 +17,25 @@ namespace PortalAlunoWeb_Services
         {
             _alunoRepository = alunoRepository;
         }
+
+        public async Task<Aluno> BuscarAlunoPorId(int Id)
+        {
+            return await _alunoRepository.BuscarAlunoPorId(Id);
+        }
+
         public async Task<List<Aluno>> BuscarTodosAlunos()
         {
             return await _alunoRepository.BuscarTodosAluno();
+        }
+
+        public void ExcluirAluno(int COD_ALUNO)
+        {
+            _alunoRepository.ExcluirAluno(COD_ALUNO);
+        }
+
+        public void SalvarAluno(Aluno aluno)
+        {
+            _alunoRepository.SalvarAluno(aluno);
         }
     }
 }

@@ -28,8 +28,8 @@
                 <td>@aluno.NOME_ALUNO</td>
                 <td>@aluno.IDADE_ALUNO</td>
                 <td>
-                    <button class="oi btn btn-warning"> Editar</button>
-                    <button class="oi btn btn-primary"> Excluir</button>
+                    <button class="oi btn btn-warning" @onclick="(() => EditarAluno(aluno.COD_ALUNO))"> Editar</button>
+                    <button class="oi btn btn-primary" @onclick="(() => ExcluirAluno(aluno.COD_ALUNO))"> Excluir</button>
                     
                 </td>
             </tr>
@@ -50,6 +50,19 @@
     private void NovoAluno()
     {
         navigation.NavigateTo("/Aluno/Novo");
+    }
+
+    void EditarAluno(int COD_ALUNO)
+    {
+        navigation.NavigateTo("/Aluno/Editar/" + COD_ALUNO);
+    }
+    public void ExcluirAluno(int COD_ALUNO)
+    {
+        Http.DeleteAsync("https://localhost:7126/api/aluno/" + COD_ALUNO);
+
+        alunos.RemoveAll(x => x.COD_ALUNO == COD_ALUNO);
+
+        StateHasChanged();
     }
 
 

@@ -10,6 +10,8 @@ namespace PortalAlunoWeb_DataAccess.Dapper.Interface
     public interface IAlunoRepository
     {
         Task<List<Aluno>> BuscarTodosAluno();
+        Task<Aluno> BuscarAlunoPorId(int Id);
+        void SalvarAluno(Aluno aluno);
         void ExcluirAluno(int ID_Aluno);
     }
 }

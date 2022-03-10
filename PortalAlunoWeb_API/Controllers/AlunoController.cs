@@ -30,15 +30,19 @@ namespace PortalAlunoWeb_Api.Controllers
 
         // GET api/<AlunoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Aluno> Get(int id)
         {
-            return "value";
+            Aluno aluno = new Aluno();
+            aluno = await _alunoService.BuscarAlunoPorId(id); 
+
+            return aluno;
         }
 
         // POST api/<AlunoController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Aluno aluno)
         {
+            _alunoService.SalvarAluno(aluno);
         }
 
         // PUT api/<AlunoController>/5
@@ -51,6 +55,7 @@ namespace PortalAlunoWeb_Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _alunoService.ExcluirAluno(id);
         }
     }
 }
