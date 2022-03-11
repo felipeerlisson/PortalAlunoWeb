@@ -25,6 +25,30 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             }
         }
 
+        public void AtualizarAluno(Aluno aluno)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+
+                    string query = @"UPDATE ALUNO SET NOME_ALUNO = @NOME_ALUNO, IDADE_ALUNO = @IDADE_ALUNO WHERE COD_ALUNO = @COD_ALUNO";
+
+                    dbConnection.Execute(query, aluno);
+
+                    dbConnection.Close();
+
+                }
+
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<Aluno> BuscarAlunoPorId(int Id)
         {
             try

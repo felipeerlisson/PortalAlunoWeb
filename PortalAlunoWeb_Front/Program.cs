@@ -4,6 +4,7 @@ using PortalAlunoWeb_Front;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using PortalAlunoWeb_Front.Service;
 
 
 
@@ -13,6 +14,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+
+builder.Services.AddScoped<ToastService>();
+
 
 
 builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });

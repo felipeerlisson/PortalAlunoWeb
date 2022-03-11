@@ -3,7 +3,7 @@
 @inject NavigationManager navigation
 
 <div class="container">
-    <EditForm Model="@Aluno" OnValidSubmit="SalvarAluno">
+    <EditForm Model="@Aluno" OnValidSubmit="@OnValidSubmit">
         <div class="form-group">
             <Field Class="col col-4">
                 <FieldLabel>Nome: </FieldLabel>
@@ -17,10 +17,11 @@
                 <Blazorise.NumericEdit @bind-Value="Aluno.IDADE_ALUNO" />
             </Field>
         </div>
-
+        <br />
         <div class="form-group" py-2>
-            <Button Color="Color.Secondary" Active @onclick="VoltarAluno">Voltar</Button>
-            <button class="btn btn-primary" type="submit">Salvar </button>
+
+            <Button Color="Color.Secondary" Active @onclick="@(() => navigation.NavigateTo("Aluno"))">@BotaoTextoCancelar</Button>
+            <button class="btn btn-primary" type="submit">@BotaoTextoSubmit</button>
 
         </div>
     </EditForm>
@@ -28,21 +29,18 @@
 </div>
 
 @code {
+
     [Parameter]
     public Aluno Aluno { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-       Console.WriteLine("chegou aqui");
-    }
-    private void SalvarAluno()
-    {
-        http.PostJsonAsync("https://localhost:7126/api/aluno", Aluno);
-        navigation.NavigateTo("Aluno");
-    }
+    [Parameter]
+    public string BotaoTextoSubmit { get; set; }
 
-    void VoltarAluno()
-    {
-        navigation.NavigateTo("Aluno");
-    }
+    [Parameter]
+    public string BotaoTextoCancelar { get; set; }
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+
 }

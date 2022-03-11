@@ -10,7 +10,8 @@ namespace PortalAlunoWeb_Services.Interface
     public interface IAlunoService
     {
         Task<List<Aluno>> BuscarTodosAlunos();
-        Task<Aluno> BuscarAlunoPorId(int Id);   
+        Task<Aluno> BuscarAlunoPorId(int Id);
+        void AtualizarAluno(Aluno aluno);
         void SalvarAluno(Aluno aluno);
         void ExcluirAluno(int COD_ALUNO);
     }

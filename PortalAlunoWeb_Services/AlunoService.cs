@@ -18,6 +18,11 @@ namespace PortalAlunoWeb_Services
             _alunoRepository = alunoRepository;
         }
 
+        public void AtualizarAluno(Aluno aluno)
+        {
+            _alunoRepository.AtualizarAluno(aluno);
+        }
+
         public async Task<Aluno> BuscarAlunoPorId(int Id)
         {
             return await _alunoRepository.BuscarAlunoPorId(Id);

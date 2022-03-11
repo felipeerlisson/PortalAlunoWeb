@@ -1,10 +1,11 @@
 ﻿@using PortalAlunoWeb_Front.Data
 @page "/Aluno/Editar/{id}"
 @inject HttpClient http
+@inject NavigationManager navigation
 
 <h3>Editar Aluno</h3>
 
-<UsuarioForm Aluno=@aluno></UsuarioForm>
+<UsuarioForm Aluno="@aluno" BotaoTextoCancelar="Voltar" BotaoTextoSubmit="Atualizar" OnValidSubmit="AtualizarAluno"></UsuarioForm>
 
 @code {
     [Parameter]
@@ -14,7 +15,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-         await BuscarAlunoPorId();
+        await BuscarAlunoPorId();
     }
 
     public  async Task BuscarAlunoPorId()
@@ -22,5 +23,10 @@
         aluno = await http.GetJsonAsync<Aluno>("https://localhost:7126/api/aluno/"+ Id);
     }
 
+    public void AtualizarAluno()
+    {
+        http.PutJsonAsync("https://localhost:7126/api/aluno/", aluno);
 
+        navigation.NavigateTo("Aluno");
+    }
 }

@@ -46,9 +46,10 @@ namespace PortalAlunoWeb_Api.Controllers
         }
 
         // PUT api/<AlunoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] Aluno aluno)
         {
+            _alunoService.AtualizarAluno(aluno);
         }
 
         // DELETE api/<AlunoController>/5

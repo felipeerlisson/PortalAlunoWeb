@@ -45,6 +45,7 @@
     protected override async Task OnInitializedAsync()
     {
         alunos = await Http.GetJsonAsync<List<Aluno>>("https://localhost:7126/api/aluno");
+        StateHasChanged();
     }
 
     private void NovoAluno()
