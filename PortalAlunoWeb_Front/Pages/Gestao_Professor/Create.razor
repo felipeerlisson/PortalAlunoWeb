@@ -1,0 +1,23 @@
+﻿@page  "/Professoer/Novo"
+@using PortalAlunoWeb_Front.Data
+@inject NavigationManager navigation
+@inject HttpClient http
+
+@using PortalAlunoWeb_Front.Service
+@using PortalAlunoWeb_Domain.Enumerador
+@inject ToastService toastService
+
+<h3>Novo Professor</h3>
+
+<ProfessorForm Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit="Salvar" OnValidSubmit="SalvarProfessor"></ProfessorForm>
+@code {
+    public Professor professor = new Professor();
+    private void SalvarProfessor()
+    {
+        http.PostAsJsonAsync("https://localhost:7126/api/professor", professor);
+
+        toastService.ShowToast("Professor cadastrado com Sucesso!",ToastLevel.Success);
+
+        navigation.NavigateTo("/Professor");
+    }
+}

@@ -1,0 +1,59 @@
+﻿@page "/Professor"
+@using PortalAlunoWeb_Front.Data
+@inject HttpClient Http
+@inject NavigationManager navigation
+
+<PageTitle> Gestão de Professores</PageTitle>
+<h3>Gestão de Professores</h3>
+
+<p>Listagem de todos os professores matriculados</p>
+
+<Button class="oi btn btn-success" @onclick="@(()=> NovoProfessor())">Novo</Button>
+<Table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+    <tbody>
+        @foreach(var professor in professores)
+        {
+            <tr>
+                <td>@professor.COD_PROFESSOR</td>
+                <td>@professor.NOME_PROFESSOR</td>
+                <td>@professor.IDADE_PROFESSOR</td>
+                <td>
+                    <button class="oi btn btn-warning" @onclick="(()=>EditarProfessor(professor.COD_PROFESSOR))">Editar</button>
+                    <butto class="oi btn btn-primary" @onclick="(()=> ExcluirProfessor(professor.COD_PROFESSOR))">Excluir</butto>
+                </td>
+            </tr>
+        }
+    </tbody>
+</Table>
+
+@code {
+    public List<Professor> professores = new List<Professor>();
+
+    protected override  async Task OnInitializedAsync()
+    {
+        professores = await Http.GetJsonAsync<List<Professor>>("https://localhost:7126/api/professor");
+        StateHasChanged();
+    }
+    private void NovoProfessor()
+    {
+        navigation.NavigateTo("/Professor/Novo");
+    }
+    public void EditarProfessor(int COD_PROFESSOR)
+    {
+        navigation.NavigateTo("/Professor/Editar/"+COD_PROFESSOR);
+    }
+    public void ExcluirProfessor(int COD_PROFESSOR)
+    {
+        Http.DeleteAsync("https://localhost:7126/api/professor/"+ COD_PROFESSOR);
+        professores.RemoveAll(x=>x.COD_PROFESSOR==COD_PROFESSOR);
+        StateHasChanged();
+    }
+}

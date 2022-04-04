@@ -1,0 +1,29 @@
+﻿@using PortalAlunoWeb_Front.Data
+@page "/Professor/Editar/{id}"
+@inject HttpClient http
+@inject NavigationManager navigation
+
+<h3>Editar Professor</h3>
+<ProfessorForm  Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit= "Atualizar" @OnValidSubmit></ProfessorForm>
+
+@code {
+    [Parameter]
+    public string id{ get; set; }
+    public Professor professor = new Professor();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BuscarProfessorPorId();
+    }
+    public async Task BuscarProfessorPorId()
+    {
+        professor = await http.GetJsonAsync<Professor>("https://localhost:7126/api/profssor/"+id);
+    }
+    public void AtualizarAluno()
+    {
+        http.PutAsJsonAsync("https://localhost:7126/api/profssor",professor);
+
+        navigation.NavigateTo("Professor");
+    }
+
+}

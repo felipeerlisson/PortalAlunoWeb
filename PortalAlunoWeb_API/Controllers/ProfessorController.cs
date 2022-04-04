@@ -26,27 +26,32 @@ namespace PortalAlunoWeb_Api.Controllers
 
         // GET api/<ProfessorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Professor> Get(int id)
         {
-            return "value";
+            Professor professor = new Professor();
+            professor=await _professorService.BuscarProfessorPorId(id);
+            return professor;
         }
 
         // POST api/<ProfessorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Professor professor)
         {
+            _professorService.SalvarProfessor(professor);
         }
 
         // PUT api/<ProfessorController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Professor professor)
         {
+            _professorService.atualizarProfessor(professor);
         }
 
         // DELETE api/<ProfessorController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _professorService.excluirProfessor(id);
         }
     }
 }
