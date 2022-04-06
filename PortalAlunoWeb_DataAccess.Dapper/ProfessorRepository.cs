@@ -56,7 +56,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string query = @"SELECT * FROM PROFESSOR WHERE COD_PROFESSOR = @id";
+                    string query = @"SELECT * FROM PROFESSOR WHERE COD_PROFESSOR = @Id";
 
                     dbConnection.Open();
                     return await dbConnection.QueryFirstAsync<Professor>(query, new { Id = @Id });

@@ -17,7 +17,7 @@
     }
     public async Task BuscarProfessorPorId()
     {
-        professor = await http.GetJsonAsync<Professor>("https://localhost:7126/api/profssor/"+id);
+        professor = await http.GetJsonAsync<Professor>("https://localhost:7126/api/professor/"+id);
     }
     public void AtualizarAluno()
     {
