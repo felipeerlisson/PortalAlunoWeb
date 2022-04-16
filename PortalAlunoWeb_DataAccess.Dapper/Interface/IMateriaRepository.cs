@@ -10,5 +10,6 @@ namespace PortalAlunoWeb_DataAccess.Dapper.Interface
     public interface IMateriaRepository
     {
         public Task<List<Materia>> BuscarTodasMaterias();
+        void SalvarMateria(Materia materia);
     }
 }

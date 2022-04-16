@@ -1,0 +1,17 @@
+﻿@page "/materia/novo"
+@using Data
+@inject HttpClient http
+
+
+<h3>Nova Materia</h3>
+<MateriaForm BotaoTextoCancelar="Cancelar" BotaoTextoSubmit="Criar" OnValidSubmit="(()=>Salvar())" materia="materia"></MateriaForm>
+
+
+@code {
+    public Materia materia=new Materia();
+    public string Salvar()
+    {
+        http.PostJsonAsync("https://localhost:7126/api/materia",materia);
+        return " Materia Criada com sucesso";
+    }
+}

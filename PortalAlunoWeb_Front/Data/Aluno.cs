@@ -7,5 +7,7 @@
         public string NOME_ALUNO { get; set; } = "";
 
         public int IDADE_ALUNO { get; set; }
+
+        public Endereco Endereco { get; set; } = new Endereco();
     }
 }

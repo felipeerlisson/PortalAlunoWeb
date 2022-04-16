@@ -1,0 +1,30 @@
+﻿@using Data
+@inject NavigationManager navigation
+@inject HttpClient http
+
+<div class="container">
+    <EditForm Model="@materia" OnValidSubmit="@OnValidSubmit">
+        <div class="form-group">
+            <Field Class="col col-4">
+                <FieldLabel>Nome: </FieldLabel>
+                <TextEdit @bind-Text=materia.NOME_MATERIA/> 
+            </Field>
+        </div>
+        <br />
+        <div class="form-group" py-2>
+        <Button Color="Color.Secondary" Active @onclick="@(()=>navigation.NavigateTo("Materia"))"> @BotaoTextoCancelar</Button>
+        <button class= "btn btn-primary" type="submit">@BotaoTextoSubmit</button>
+    </div>
+    </EditForm>
+</div>
+@code {
+    [Parameter]
+    public Materia materia { get; set; }
+    [Parameter]
+    public string BotaoTextoCancelar{ get; set; }
+    [Parameter]
+    public string BotaoTextoSubmit{ get; set; }
+    [Parameter]
+    public EventCallback OnValidSubmit {get;set;}
+
+}

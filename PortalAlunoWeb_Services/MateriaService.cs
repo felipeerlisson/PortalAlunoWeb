@@ -21,6 +21,11 @@ namespace PortalAlunoWeb_Services
         {
             return await _materiaRepository.BuscarTodasMaterias();
         }
+
+        public void SalvarMateria(Materia materia)
+        {
+            _materiaRepository.SalvarMateria(materia);
+        }
     }
 
 }

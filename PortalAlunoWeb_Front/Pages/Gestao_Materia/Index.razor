@@ -1,0 +1,15 @@
+﻿@page "/materia"
+@inject NavigationManager Nav
+
+<PageTitle> Gestão de Materias</PageTitle>
+<h3>Gestão de Materias</h3>
+
+<p>Listagem de todas as materias cadastradas</p>
+
+<Button class="oi btn btn-success" @onclick="@(()=> NovaMateria())">Novo</Button>
+@code {
+    public void NovaMateria()
+    {
+        Nav.NavigateTo("/materia/novo");
+    }
+}

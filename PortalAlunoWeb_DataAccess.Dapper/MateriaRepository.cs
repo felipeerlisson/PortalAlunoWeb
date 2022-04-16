@@ -48,5 +48,28 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 throw;
             }
         }
-    }
+
+        public void SalvarMateria(Materia materia)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+
+                    string query = @"INSERT INTO MATERIA (NOME_MATERIA) VALUES (@NOME_MATERIA)";
+
+                    dbConnection.Close();
+
+                    dbConnection.Execute(query,materia);
+                }
+
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        }
 }
