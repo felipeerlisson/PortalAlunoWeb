@@ -9,9 +9,14 @@
 
 <h3>Novo Professor</h3>
 
-<ProfessorForm Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit="Salvar" OnValidSubmit="SalvarProfessor"></ProfessorForm>
-@code {
+
+<p hide=""> Voce criou um Novo professor!</p>
+
+<ProfessorForm Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit="Salvar" EnviarFormProfessor="SalvarProfessor"></ProfessorForm>
+@code 
+{
     public Professor professor = new Professor();
+
     private void SalvarProfessor()
     {
         http.PostAsJsonAsync("https://localhost:7126/api/professor", professor);

@@ -4,7 +4,7 @@
 @inject NavigationManager navigation
 
 <h3>Editar Professor</h3>
-<ProfessorForm  Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit= "Atualizar" @OnValidSubmit></ProfessorForm>
+<ProfessorForm  Professor="@professor" BotaoTextoCancelar="Voltar" BotaoTextoSubmit= "Atualizar" EnviarFormProfessor="@AtualizarAluno"></ProfessorForm>
 
 @code {
     [Parameter]
@@ -15,10 +15,12 @@
     {
         await BuscarProfessorPorId();
     }
+
     public async Task BuscarProfessorPorId()
     {
         professor = await http.GetJsonAsync<Professor>("https://localhost:7126/api/professor/"+id);
     }
+
     public void AtualizarAluno()
     {
         http.PutAsJsonAsync("https://localhost:7126/api/profssor",professor);

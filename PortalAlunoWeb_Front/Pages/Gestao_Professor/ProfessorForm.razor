@@ -3,7 +3,8 @@
 @inject HttpClient http
 
 <div class="container">
-    <EditForm Model="@Professor" OnValidSubmit="@OnValidSubmit">
+    <EditForm Model="@Professor" OnValidSubmit="@EnviarFormProfessor">
+
         <div class="form-group">
             <Field Class="col col-4">
                 <FieldLabel>Nome: </FieldLabel>
@@ -36,6 +37,6 @@
     public string BotaoTextoCancelar{ get; set; }
 
     [Parameter]
-    public EventCallback OnValidSubmit{ get; set; }
+    public EventCallback EnviarFormProfessor{ get; set; }
 
 }

@@ -58,11 +58,11 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                     dbConnection.Open();
                     string query = @"SELECT * FROM PROFESSOR WHERE COD_PROFESSOR = @Id";
 
-                    dbConnection.Open();
+                    dbConnection.Close();
                     return await dbConnection.QueryFirstAsync<Professor>(query, new { Id = @Id });
                 }
             }
-            catch 
+            catch
             { 
                 throw; 
             }
