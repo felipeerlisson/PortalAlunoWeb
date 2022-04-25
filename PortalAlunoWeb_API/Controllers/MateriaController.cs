@@ -31,8 +31,9 @@ namespace PortalAlunoWeb_Api.Controllers
 
         // POST api/<MateriaController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Materia materia)
         {
+            _materiaService.SalvarMateria(materia);
         }
 
         // PUT api/<MateriaController>/5

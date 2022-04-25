@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortalAlunoWeb_Domain
+﻿namespace PortalAlunoWeb_Front.Data
 {
     public class Materia
     {

@@ -2,6 +2,8 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
+
+
 <div class="container">
     <EditForm Model="@Aluno" OnValidSubmit="@OnValidSubmit">
         <div class="form-group">
@@ -17,6 +19,53 @@
                 <Blazorise.NumericEdit @bind-Value="Aluno.IDADE_ALUNO" />
             </Field>
         </div>
+
+        <div class="form-group">
+            <Field Class="col col-4">
+                <FieldLabel>Cep: </FieldLabel>
+                <Blazorise.NumericEdit @bind-Value="Aluno.Endereco.cep" @onchange="BuscarViaCepAluno" />
+            </Field>
+        </div>
+
+        @if (Aluno.Endereco.bairro != "")
+        {
+            <div class="form-group">
+                <Field Class="col col-8">
+                    <FieldLabel>Rua: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.logradouro" />
+                </Field>
+
+                   <Field Class="col col-4">
+                    <FieldLabel>Número: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.numero" />
+                </Field>
+            </div>
+
+                        <div class="form-group">
+                <Field Class="col col-4">
+                    <FieldLabel>Complemento: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.complemento" />
+                </Field>
+            </div>
+            <div class="form-group">
+                <Field Class="col col-4">
+                    <FieldLabel>Bairro: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.bairro" />
+                </Field>
+            </div>
+            <div class="form-group">
+                <Field Class="col col-4">
+                    <FieldLabel>Cidade: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.localidade" />
+                </Field>
+            </div>
+                        <div class="form-group">
+                <Field Class="col col-4">
+                    <FieldLabel>UF: </FieldLabel>
+                    <TextEdit @bind-Text="Aluno.Endereco.uf" />
+                </Field>
+            </div>
+        }
         <br />
         <div class="form-group" py-2>
 
@@ -42,5 +91,10 @@
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
 
+    public async void BuscarViaCepAluno()
+    {
+        Aluno.Endereco = await http.GetJsonAsync<Endereco>("https://viacep.com.br/ws/" + Aluno.Endereco.cep + "/json/");
+        StateHasChanged();
+    }
 
 }
