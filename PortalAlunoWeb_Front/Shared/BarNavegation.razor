@@ -1,0 +1,39 @@
+﻿@using PortalAlunoWeb_Front.Data
+@inject NavigationManager navigation
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@Title</h2>
+        <ol class="breadcrumb">
+            @if (breadCrumb != null)
+            {
+                @foreach (var link in breadCrumb.OrderBy(x => x.OrderIndex))
+                {
+                    if (link.IsActive)
+                    {
+                        <li class="breadcrumb-item active mt-bread-item" aria-current="page"><b>  @link.Title  </b></li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item"><a class="mt-bread-item-link" @onclick="@(() => navigation.NavigateTo(@link.Address, true))">@link.Title</a></li>
+                    }
+                }
+
+            }
+
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public List<BreadCrumb> breadCrumb { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+
+}

@@ -1,20 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+   
+<div class="sidebar-collapse">   
+    <NavMenu />
+</div>
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <Toast />
+
+    <div class="top-row px-4">
+        <TopMenuNavBar />
     </div>
 
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">Sobre</a>
-        </div>
-
-        <Toast />
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <div class="content px-4">
+        @Body
+    </div>
+    <div class="footer">
+        <Footer />
+    </div>
 </div>

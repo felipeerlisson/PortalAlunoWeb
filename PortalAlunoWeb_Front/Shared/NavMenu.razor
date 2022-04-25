@@ -1,55 +1,231 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">PortalAlunoWeb_Front</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿@using PortalAlunoWeb_Front.Data
+@using PortalAlunoWeb_Front.Service
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img class="medium-logo" src="Inspinia/img/cemig-logo.png" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear" style="text-align: center;">
+                            <span class="block m-t-xs">
+
+                            
+                                    <strong class="font-bold">Nome Usuário</strong>
+
+                                
+                            </span>
+                            <span class="text-muted text-xs block">
+                                Administrador   <b class="caret"></b>
+                            </span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="profile.html">Perfil</a></li>
+                        <li><a href="contacts.html">Contatos</a></li>
+                        <li><a href="mailbox.html">Caixa de Entrada</a></li>
+                        <li class="divider"></li>
+                        <li><a >Sair</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    <img class="small-logo" src="Inspinia/img/cemig-logo.png" />
+                </div>
+            </li>
+
+            @if (menuList == null)
+            {
+                <li>Carregando....</li>
+            }
+            else
+            {
+
+                @foreach (var mn in menuList)
+                {
+                    <li>
+                        <a alt="Leiautes" title="@mn.DES_MENU" @onclick="()=>GetIsClicked(mn)">
+                            <i class="@mn.DES_ICONE"></i><span class="nav-label">@mn.DES_MENU</span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            @foreach (var subMenu in mn.ItensMenu)
+                            {
+                                @if (mn.COD_MENU == subMenu.COD_MENU)
+                                {
+                                    @if (expandSubNav && mn.COD_MENU == clickedMenu)
+                                    {
+                                        <li>
+                                            @if (mn.ItensMenu.Any(x => x.COD_MENU_ITEM_PAI == subMenu.COD_MENU_ITEM))
+                                            {
+                                            <a alt="Leiautes" title="@subMenu.DES_MENU_ITEM" @onclick="()=>GetIsClickedSub(subMenu)">
+                                              <i class="@iconSubMenuPai"></i><span class="nav-label">@subMenu.DES_MENU_ITEM</span>
+                                            </a>
+                                                @if (expandSubNavSUB && subMenu.COD_MENU_ITEM == clickedMenuSUB)
+                                                {
+                                                    <ul class="nav nav-second-level">
+                                                        @foreach (var subMenuFilho in mn.ItensMenu)
+                                                        {
+                                                            <li>
+                                                                @if (subMenuFilho.COD_MENU_ITEM_PAI == subMenu.COD_MENU_ITEM)
+                                                                {
+                                                                    <NavLink class="nav-link" href="@subMenuFilho.DES_LINK" @onclick="() => GetIsClickedSub(subMenuFilho)">
+                                                                        <span class="@subMenuFilho.DES_ICONE" aria-hidden="true"></span>@subMenuFilho.DES_MENU_ITEM
+                                                                    </NavLink>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (subMenu.COD_MENU_ITEM_PAI == 0)
+                                                {
+                                                    <NavLink class="nav-link" href="@subMenu.DES_LINK" @onclick="()=>GetIsClicked(mn)">
+                                                        <span class="@subMenu.DES_ICONE" aria-hidden="true"></span>@subMenu.DES_MENU_ITEM
+                                                    </NavLink>
+                                                }
+
+                                            }
+
+                                        </li>
+                                    }
+                                }
+                            }
+
+
+
+                        </ul>
+
+                    </li>
+                }
+
+            }
+
+
+        </ul>
+
     </div>
-</div>
+</nav>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="aluno">
-                <span class="oi oi-person" aria-hidden="true"></span> Gestão Aluno
-            </NavLink>
-        </div>
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="materia">
-                <span class="oi oi-book" aria-hidden="true"></span> Gestão Materias
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <div class="nav-item px-3">
-            <NavLink class="nav-link" href="professor">
-                <span class="oi oi-person" aria-hidden="true"></span> Gestão Professor
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
+@code{
     private bool collapseNavMenu = true;
+    private bool expandSubNav;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private int clickedMenu = 0;
+    private bool hasPageName = true;
+    private int prevClickedMenu = 0;
+
+    private bool expandSubNavSUB;
+
+    private int clickedMenuSUB = 0;
+    private bool hasPageNameSUB = true;
+    private int prevClickedMenuSUB = 0;
+
+    private string login = "";
+
+    private string iconSubMenuPai = "fa fa-caret-right";
+
+
+    List<Menu> menuList = new List<Menu>();
+
+
+    [Inject] protected ToastService ToastService { get; set; }
+
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        if (hasPageName)
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
     }
+
+    public void GetIsClicked(Menu mn)
+    {
+        clickedMenu = mn.COD_MENU;
+        if (prevClickedMenu != clickedMenu)
+        {
+            expandSubNav = false;
+            if (mn.ItensMenu != null || mn.DES_MENU == "CADASTROS")
+            {
+                expandSubNav = true;
+                hasPageName = true;
+            }
+            else
+            {
+                expandSubNav = !expandSubNav;
+                hasPageName = false;
+            }
+        }
+        else
+        {
+            expandSubNav = !expandSubNav;
+        }
+
+        prevClickedMenu = clickedMenu;
+
+    }
+
+    public void GetIsClickedSub(Menu_Item sub)
+    {
+        clickedMenuSUB = sub.COD_MENU_ITEM;
+        if (prevClickedMenuSUB != clickedMenuSUB)
+        {
+            expandSubNavSUB = false;
+            if (sub.COD_MENU_ITEM_PAI != 0 || sub.DES_MENU_ITEM == "Gestão de Sobreavisos")
+            {
+                expandSubNavSUB = true;
+                hasPageNameSUB = true;
+                iconSubMenuPai = "fa fa-caret-down";
+                StateHasChanged();
+            }
+            else
+            {
+                expandSubNavSUB = !expandSubNavSUB;
+                hasPageNameSUB = false;
+
+            }
+        }
+        else
+        {
+            if (expandSubNavSUB)
+            {
+                iconSubMenuPai = "fa fa-caret-right";
+            }
+            else
+            {
+                iconSubMenuPai = "fa fa-caret-down";
+            }
+            expandSubNavSUB = !expandSubNavSUB;
+
+            StateHasChanged();
+        }
+
+        prevClickedMenuSUB = clickedMenuSUB;
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BuscarMenu();
+    }
+
+    private async Task BuscarMenu()
+    {
+        menuList = await http.GetJsonAsync<List<Menu>>("https://localhost:7126/api/Menu");
+    }
+
+
+   
+
+
 }

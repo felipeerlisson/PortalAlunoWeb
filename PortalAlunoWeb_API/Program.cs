@@ -23,15 +23,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 // ÁREA PARA ADD OS SERVICES
-builder.Services.AddScoped<IAlunoService, AlunoService>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<IMateriaService, MateriaService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+
 
 
 // ÁREA PARA ADD OS REPOSITORY
-builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
 builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
 builder.Services.AddScoped<IMateriaRepository, MateriaRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+
 
 
 

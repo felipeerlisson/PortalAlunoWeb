@@ -1,0 +1,55 @@
+﻿@using PortalAlunoWeb_Front.Service
+@inject NavigationManager NavigationManager
+@inject IJSRuntime jsRunTime
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header" style="width: 75%;">
+            <button type="button" title="Recolher / Expandir" class="navbar-minimalize minimalize-styl-2 btn btn-primary">
+                <i class="fa fa-bars"></i>
+            </button>
+            <span class="m-r-sm text-muted welcome-message main-title">COMÉRCIO EM REDE</span><!--<div style="width: 50px;"></div>-->
+            <span class="m-r-sm text-muted welcome-message main-sub-title">Mediação na Área de Comércio para compras usando a  Tecnologia da Informação</span>
+            <form role="search" class="navbar-form-custom" action="search_results.html">
+
+                <!-- Formulário de Pesquisa - Descomentar para ativar -->
+                <!--
+                                <div class="form-group">
+                                    <input type="text" placeholder="Pesquisar..." class="form-control" name="top-search" id="top-search" style="position: absolute; margin-left: 50%; width: 200px; border: 1px solid #999c9e; border-radius: 3px; background-color: #fff; height: 40px; margin-top: 10px; margin-bottom: -20px;">
+                                </div>
+                -->
+                <!-- Formulário de Pesquisa - Descomentar para ativar -->
+
+            </form>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li>
+                <a class="login-icon" >
+                    <i class="fa fa-power-off top-nav-menu-icon" alt="Sair" title="Sair"></i>
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+</div>
+
+@code{
+
+    public bool expandirRecolher = false;
+    //public async void ExpandirRecolherMenu()
+    //{
+    //    expandirRecolher = await jsRunTime.InvokeAsync<bool>("saJsFunctions.ExpandirRecolherMenu", expandirRecolher);
+    //}
+
+
+    //private async Task HandleLogin()
+    //{
+
+    //    await AuthService.Logout();
+
+    //    NavigationManager.NavigateTo("/login");
+
+    //}
+}
