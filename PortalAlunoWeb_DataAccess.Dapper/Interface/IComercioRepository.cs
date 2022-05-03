@@ -1,4 +1,4 @@
-﻿ using PortalAlunoWeb_Domain;
+﻿using PortalAlunoWeb_Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PortalAlunoWeb_DataAccess.Dapper.Interface
 {
-    public interface IMateriaRepository
+    public interface IComercioRepository
     {
-        public Task<List<Materia>> BuscarTodasMaterias();
-        void SalvarMateria(Materia materia);
+        public Task<List<Comercio>> BuscarTodosComercios();
     }
 }

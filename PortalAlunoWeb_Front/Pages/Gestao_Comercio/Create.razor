@@ -1,0 +1,16 @@
+﻿@page "/comercio/novo"
+@using Data
+@inject HttpClient http
+
+
+<h3>Novo Comercio</h3>
+<ComercioForm cancel="cancel" SignIn="SignIn" OnValidSubmit="(()=>salvar())" comercio="comercio"></ComercioForm>
+
+@code {
+    public Comercio comercio = new Comercio();
+    public string salvar()
+    {
+        http.PostAsJsonAsync("https://localhost:7126/api/comercio", comercio);
+        return "Comercio salvo com sucesso";
+    }
+}

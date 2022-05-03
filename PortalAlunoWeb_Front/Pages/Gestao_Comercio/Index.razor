@@ -1,0 +1,17 @@
+﻿@page "/comercio"
+@inject NavigationManager Nav
+
+<PageTitle> Gestão de Comercios</PageTitle>
+<h3>Gestão de Comercios</h3>
+
+<p>Listagem de todos os comercios cadastrados</p>
+
+<Button class="oi btn btn-success" @onclick="@(()=> NovoComercio())">Novo</Button>
+
+@code {
+    public void NovoComercio()
+    {
+        Nav.NavigateTo("/comercio/novo");
+    }
+
+}
