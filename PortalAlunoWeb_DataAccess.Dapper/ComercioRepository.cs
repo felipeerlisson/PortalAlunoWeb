@@ -47,5 +47,31 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 throw;
             }
         }
+
+        public async Task<ReturnObject> SalvarComercio(Comercio comercio)
+        {
+          ReturnObject returnObject = new ReturnObject();   
+
+
+            try
+            {
+
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+                    string query = @$"insert into COMERCIO (NOME_COMERCIO, CEP, LOGRADOURO, NUMERO,  BAIRRO, LOCALIDADE, UF)
+                    VALUES ('{comercio.NOME_COMERCIO}', '{comercio.Endereco.cep}', '{comercio.Endereco.logradouro}', {comercio.Endereco.numero}, '{comercio.Endereco.bairro}', '{comercio.Endereco.localidade}', '{comercio.Endereco.uf}')";
+                    dbConnection.Close();
+                    dbConnection.Execute(query);
+
+                    returnObject.Sucesso = true;
+                    return  returnObject;
+                }
+            }
+            catch(Exception ex)
+            {
+                  return  returnObject;
+            }
+        }
     }
 }

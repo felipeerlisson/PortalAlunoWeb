@@ -1,16 +1,66 @@
 ﻿@page "/comercio/novo"
 @using Data
+@using PortalAlunoWeb_Front.Shared
 @inject HttpClient http
+@inject NavigationManager navigation
 
+<div class="row border-bottom white-bg dashboard-header">
+    <div class="col-sm-8">
+        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Gestão de Comércios"></BarNavegation>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <button class="btn btn-primary" @onclick="@(() => navigation.NavigateTo("Comercio/Novo"))"> Novo</button>
+        </div>
+    </div>
+</div>
 
-<h3>Novo Comercio</h3>
-<ComercioForm cancel="cancel" SignIn="SignIn" OnValidSubmit="(()=>salvar())" comercio="comercio"></ComercioForm>
+<br />
+
+<div class="row wrapper border-bottom white-bg page-heading">
+<ComercioForm   EnviarFormComercio="salvar" ButtonTextCancelar="Voltar" ButtonTextSubmit="Criar" Comercio="comercio" ></ComercioForm>
+
+</div>
 
 @code {
     public Comercio comercio = new Comercio();
-    public string salvar()
+    public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BreadCrumb breadCrumb = new BreadCrumb
+            {
+                Address = "/",
+                Title = "Início",
+                IsActive = false,
+                OrderIndex = 1
+
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+         breadCrumb = new BreadCrumb
+            {
+                Address = "/Comercio",
+                Title = "Gestão de Comércios",
+                IsActive = false,
+                OrderIndex = 2
+
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+         breadCrumb = new BreadCrumb
+            {
+                Address = "/Comercio/Novo",
+                Title = "Cadastro de Comércios",
+                IsActive = true,
+                OrderIndex = 3
+
+            };
+        breadcrumbLinks.Add(breadCrumb);
+    }
+
+    public void salvar()
     {
         http.PostAsJsonAsync("https://localhost:7126/api/comercio", comercio);
-        return "Comercio salvo com sucesso";
     }
 }
