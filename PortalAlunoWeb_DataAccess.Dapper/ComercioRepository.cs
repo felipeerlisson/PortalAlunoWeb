@@ -37,7 +37,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string Query = @"SELECT * FROM PROFESSOR";
+                    string Query = @"SELECT * FROM COMERCIO";
                     dbConnection.Close();
                     return (List<Comercio>)await dbConnection.QueryAsync<Comercio>(Query);
                 }

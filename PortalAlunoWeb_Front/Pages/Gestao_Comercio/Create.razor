@@ -4,6 +4,12 @@
 @inject HttpClient http
 @inject NavigationManager navigation
 
+@*essas 3 referencias abaixo é para instanciar o ToastService*@
+@using PortalAlunoWeb_Front.Service
+@using PortalAlunoWeb_Domain.Enumerador
+@inject ToastService toastService
+
+
 <div class="row border-bottom white-bg dashboard-header">
     <div class="col-sm-8">
         <BarNavegation breadCrumb="@breadcrumbLinks" Title="Gestão de Comércios"></BarNavegation>
@@ -38,7 +44,7 @@
             };
         breadcrumbLinks.Add(breadCrumb);
 
-         breadCrumb = new BreadCrumb
+        breadCrumb = new BreadCrumb
             {
                 Address = "/Comercio",
                 Title = "Gestão de Comércios",
@@ -48,7 +54,7 @@
             };
         breadcrumbLinks.Add(breadCrumb);
 
-         breadCrumb = new BreadCrumb
+        breadCrumb = new BreadCrumb
             {
                 Address = "/Comercio/Novo",
                 Title = "Cadastro de Comércios",
@@ -60,7 +66,20 @@
     }
 
     public void salvar()
-    {
-        http.PostAsJsonAsync("https://localhost:7126/api/comercio", comercio);
+    {     
+
+
+        try
+        {
+            http.PostAsJsonAsync("https://localhost:7126/api/comercio", comercio);
+            toastService.ShowToast("Comércio criado com sucesso!", ToastLevel.Success);
+            navigation.NavigateTo("Comercio");
+        }
+        catch
+        {
+             toastService.ShowToast("Ocorreu um erro", ToastLevel.Error);
+
+        }
+        
     }
 }

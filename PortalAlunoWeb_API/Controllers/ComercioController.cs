@@ -10,17 +10,23 @@ namespace PortalAlunoWeb_Api.Controllers
     [ApiController]
     public class ComercioController : ControllerBase
     {
-        private readonly IComercioService _comercioService;
+        protected readonly IComercioService _comercioService;
 
         public ComercioController(IComercioService comercioService)
         {
             _comercioService = comercioService;
         }
+
+
         // GET: api/<ComercioController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<Comercio>> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Comercio> comercios = new List<Comercio>();
+
+            comercios = await _comercioService.BuscarTodosComercios();
+
+            return comercios;
         }
 
         // GET api/<ComercioController>/5

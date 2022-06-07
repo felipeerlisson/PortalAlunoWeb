@@ -3,6 +3,7 @@
 @using PortalAlunoWeb_Front.Shared
 @using PortalAlunoWeb_Front.Data
 @inject NavigationManager navigation
+@inject HttpClient http;
 
 <div class="row border-bottom white-bg dashboard-header">
     <div class="col-sm-8">
@@ -14,9 +15,51 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <h2> Lista de comércio</h2>
+                    <div class="hr-line-dashed"></div>
 
+                    <br />
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Comércio</th>
+                                <th>CEP</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var comercio in comercios)
+                            {
+                                 <tr>
+                                <td>@comercio.COD_COMERCIO</td>
+                                <td><span class="line">@comercio.NOME_COMERCIO</span></td>
+                                <td>CEP TESTE</td>
+                                <td class="text-navy">
+                                    <button class="btn btn-warning btn-circle"><i class="fa fa-pencil-square-o"></i></button>
+                                    <button class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>
+
+                                </td>
+                            </tr>
+                            }
+                           
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @code {
     public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+    public List<Comercio> comercios = new List<Comercio>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -30,7 +73,7 @@
             };
         breadcrumbLinks.Add(breadCrumb);
 
-         breadCrumb = new BreadCrumb
+        breadCrumb = new BreadCrumb
             {
                 Address = "/Comercio",
                 Title = "Gestão de Comércios",
@@ -39,5 +82,13 @@
 
             };
         breadcrumbLinks.Add(breadCrumb);
+
+        await ListarComercios();
+    }
+
+    async Task ListarComercios()
+    {
+        comercios = await http.GetFromJsonAsync<List<Comercio>>("https://localhost:7126/api/Comercio");
+        StateHasChanged();
     }
 }

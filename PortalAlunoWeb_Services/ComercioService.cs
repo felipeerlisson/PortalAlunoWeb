@@ -19,9 +19,9 @@ namespace PortalAlunoWeb_Services
             _comercioRepository = comercioRepository;
         }
 
-        public Task<List<Comercio>> BuscarTodosComercios()
+        public async Task<List<Comercio>> BuscarTodosComercios()
         {
-            throw new NotImplementedException();
+            return await _comercioRepository.BuscarTodosComercios();
         }
 
         public async Task<ReturnObject> SalvarComercio(Comercio comercio)
