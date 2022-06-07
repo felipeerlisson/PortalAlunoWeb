@@ -11,5 +11,7 @@ namespace PortalAlunoWeb_Services.Interface
     {
         public Task<List<Comercio>> BuscarTodosComercios();
         public Task<ReturnObject> SalvarComercio(Comercio comercio);
+
+        public Task<ReturnObject> ValidarComercio(Comercio comercio);
     }
 }

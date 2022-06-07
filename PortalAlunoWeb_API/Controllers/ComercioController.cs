@@ -22,11 +22,7 @@ namespace PortalAlunoWeb_Api.Controllers
         [HttpGet]
         public async Task<List<Comercio>> Get()
         {
-            List<Comercio> comercios = new List<Comercio>();
-
-            comercios = await _comercioService.BuscarTodosComercios();
-
-            return comercios;
+            return await _comercioService.BuscarTodosComercios();
         }
 
         // GET api/<ComercioController>/5

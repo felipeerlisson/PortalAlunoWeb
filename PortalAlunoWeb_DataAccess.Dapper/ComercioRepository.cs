@@ -30,6 +30,34 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             }
         }
 
+        public void AtualizarComercio(Comercio cliente)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Comercio>> BuscarComercioPorID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Comercio>> BuscarComercioPorNome(string NOME_COMERCIO)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+                    string Query = @"SELECT * FROM COMERCIO WHERE NOME_COMERCIO = @NOME_COMERCIO";
+                    dbConnection.Close();
+                    return (List<Comercio>)await dbConnection.QueryAsync<Comercio>(Query,new { NOME_COMERCIO=NOME_COMERCIO });
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Comercio>> BuscarTodosComercios()
         {
             try
@@ -40,6 +68,24 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                     string Query = @"SELECT * FROM COMERCIO";
                     dbConnection.Close();
                     return (List<Comercio>)await dbConnection.QueryAsync<Comercio>(Query);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void ExcluirComercio(int IdComercio)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = Connection)
+                {
+                    dbConnection.Open();
+                    string query = @"DELETE COMERCIO WHERE COD_COMERCIO=@IdComercio";
+                    dbConnection.Close();
+                    dbConnection.Execute(query, new { COD_COMERCIO = @IdComercio });
                 }
             }
             catch

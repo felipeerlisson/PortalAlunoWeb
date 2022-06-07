@@ -26,30 +26,47 @@ namespace PortalAlunoWeb_Services
 
         public async Task<ReturnObject> SalvarComercio(Comercio comercio)
         {
+            ReturnObject returnObject = new ReturnObject();
+            returnObject= await ValidarComercio(comercio);
+            if (returnObject.Sucesso) 
+            {
+                _comercioRepository.SalvarComercio(comercio);
+                return returnObject;
+            }
+            else 
+            {
+                return returnObject;
+            }
+        }
+
+        public async Task<ReturnObject> ValidarComercio(Comercio comercio)
+        {
+            ReturnObject retornoStatus= new ReturnObject();
+            List<Comercio> listaDeComerciosDuplicados = new List<Comercio>();
             try
             {
-                retornoStatus = await _comercioRepository.SalvarComercio(comercio);
-
-                if (retornoStatus.Sucesso)
+                listaDeComerciosDuplicados= await _comercioRepository.BuscarComercioPorNome(comercio.NOME_COMERCIO);
+                 if(listaDeComerciosDuplicados.Any()) 
                 {
-                    retornoStatus.Mensagem = "Comércio criado com Sucesso!";
+                    retornoStatus.Mensagem = "Falha ao criar comercio, Comercio já existente";
+                    retornoStatus.Sucesso = false;
+                    return retornoStatus;
                 }
-                else
+                else 
                 {
-                    retornoStatus.Mensagem = "Falha ao criar o comércio!";
+                    retornoStatus.Mensagem = "Comercio criado com sucesso.";
+                    retornoStatus.Sucesso = true;
+                    return retornoStatus;
                 }
-
-                return retornoStatus;  
-                
             }
             catch (Exception ex)
             {
-
                 Console.Write(ex);
 
                 retornoStatus.Mensagem = "Falha ao criar o comércio!";
 
                 return retornoStatus;
+
             }
         }
     }

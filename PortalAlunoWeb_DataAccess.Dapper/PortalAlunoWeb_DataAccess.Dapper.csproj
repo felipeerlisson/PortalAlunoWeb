@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PortalAlunoWeb_DOMAIN\PortalAlunoWeb_Domain.csproj" />
+    <ProjectReference Include="..\PortalAlunoWeb_Front\PortalAlunoWeb_Front.csproj" />
   </ItemGroup>
 
 </Project>
