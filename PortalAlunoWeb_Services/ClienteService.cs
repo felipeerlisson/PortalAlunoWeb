@@ -20,9 +20,9 @@ namespace PortalAlunoWeb_Services
             _clienteRepository = clienteRepository;
         }
 
-        public void AtualizarCliente(Cliente cliente)
+        public async Task<ReturnObject> AtualizarCliente(Cliente cliente)
         {
-            _clienteRepository.AtualizarCliente(cliente);
+           return await _clienteRepository.AtualizarCliente(cliente);
         }
 
         public async Task<Cliente> BuscarClientePorID(int id)

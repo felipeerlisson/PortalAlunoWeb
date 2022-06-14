@@ -12,7 +12,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper.Interface
         public Task<List<Cliente>> BuscarTodosClientes();
         public Task<Cliente> BuscarClientePorID(int id);
         public void SalvarCliente(Cliente cliente);
-        void AtualizarCliente(Cliente cliente);
+        Task<ReturnObject> AtualizarCliente(Cliente cliente);
         void ExcluirCliente(int IdCliente);
     }
 }

@@ -1,15 +1,44 @@
 ﻿@page "/cliente/Editar/{id}"
 @using PortalAlunoWeb_Front.Shared
 @using PortalAlunoWeb_Front.Data
+@inject HttpClient http
+@inject NavigationManager navigation
+
+@*os 3 de baixo é para inicializar o toast*@
+@using PortalAlunoWeb_Front.Service
+@using PortalAlunoWeb_Domain.Enumerador
+@inject ToastService toastService
 
 <div class="row border-bottom white-bg dashboard-header">
     <div class="col-sm-8">
         <BarNavegation breadCrumb="@breadcrumbLinks" Title="Criação de Cliente"></BarNavegation>
     </div>
 </div>
-<ClienteForm></ClienteForm>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <ClienteForm Cliente="cliente" ButtonTextCancelar="Cancelar" ButtonTextSubmit="Atualizar" EnviarFormCliente="AtualizarCliente"></ClienteForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
+
+
+    [Parameter]
+    public string id { get; set; }
+
+    public Cliente cliente = new Cliente();
+
     public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+
+    public ReturnObject retorno = new ReturnObject();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,5 +68,33 @@
                 OrderIndex = 3
             };
         breadcrumbLinks.Add(breadCrumb);
+
+        if (id != "0" && id != "")
+        {
+            BuscarClientePorId();
+        }
     }
+
+    async void BuscarClientePorId()
+    {
+        cliente = await http.GetJsonAsync<Cliente>("https://localhost:7126/api/cliente/" + id);
+        StateHasChanged();
+    }
+
+    async void AtualizarCliente()
+    {
+        retorno = await http.PutJsonAsync<ReturnObject>("https://localhost:7126/api/cliente/", cliente);
+
+        if (retorno.Sucesso)
+        {
+            toastService.ShowToast(retorno.Mensagem, ToastLevel.Success);
+            navigation.NavigateTo("Cliente");
+        }
+        else
+        {
+            toastService.ShowToast(retorno.Mensagem, ToastLevel.Error);
+        }
+
+    }
+
 }

@@ -16,6 +16,11 @@ namespace PortalAlunoWeb_DataAccess.Dapper
     {
         //CONFIGURAÇÃO PADRAO DE ABRIR E FECHAR CONEXÃO COM O BANCO DE DADOS (TER EM TODAS AS CLASSES)
         protected readonly IConfiguration _config;
+
+        public ClienteRepository(IConfiguration config)
+        {
+            _config = config;
+        }
         public IDbConnection Connection
         {
             get
@@ -24,20 +29,29 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             }
         }
 
-        public void AtualizarCliente(Cliente cliente)
+        public async Task<ReturnObject> AtualizarCliente(Cliente cliente)
         {
+            ReturnObject retorno = new ReturnObject();
+
             try
             {
+
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string Query = "UPDATE CLIENTE SET NOME_CLIENTE=@NOME_CLIENTE,EMAIL_CLIENTE=@EMAIL_CLIENTE WHERE COD_CLIENTE=@idCliente";
+                    string Query = "UPDATE CLIENTE SET NOME_CLIENTE=@NOME_CLIENTE,EMAIL_CLIENTE=@EMAIL_CLIENTE WHERE COD_CLIENTE=@COD_CLIENTE";
                     dbConnection.Close();
+                    dbConnection.Execute(Query, cliente);
                 }
+                retorno.Mensagem = "Cliente atualizado com sucesso!";
+                retorno.Sucesso = true;
+                return retorno;
             }
             catch
             {
-                throw;
+                retorno.Mensagem = "Cliente não atualizado!";
+                retorno.Sucesso = false;
+                return retorno;
             }
         }
 
@@ -50,7 +64,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                     dbConnection.Open();
                     string Query = "SELECT * FROM CLIENTE where COD_CLIENTE = @id";
                     dbConnection.Close();
-                    return (Cliente)await dbConnection.QueryAsync<Cliente>(Query);
+                    return await dbConnection.QueryFirstAsync<Cliente>(Query, new { id = @id });
                 }
             }
             catch

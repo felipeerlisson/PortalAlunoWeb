@@ -8,8 +8,8 @@ namespace PortalAlunoWeb_Domain
 {
     public class Cliente
     {
-        public int idCliente { get; set; }
-        public string nome { get; set; }
-        public string email { get; set; }
+        public int COD_CLIENTE { get; set; }
+        public string NOME_CLIENTE { get; set; }
+        public string EMAIL_CLIENTE { get; set; }
     }
 }

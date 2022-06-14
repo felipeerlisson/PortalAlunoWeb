@@ -12,7 +12,7 @@ namespace PortalAlunoWeb_Services.Interface
         public Task<List<Cliente>> BuscarTodosClientes();
         Task<Cliente> BuscarClientePorID(int id);
         public Task<ReturnObject> SalvarCliente(Cliente cliente);
-        void AtualizarCliente(Cliente cliente);
+        Task<ReturnObject> AtualizarCliente(Cliente cliente);
         void ExcluirCliente(int IdCliente);
     }
 }

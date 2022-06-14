@@ -3,7 +3,12 @@
 @using PortalAlunoWeb_Front.Shared
 @using PortalAlunoWeb_Front.Data
 @inject NavigationManager navigation
-@inject HttpClient http;
+@inject HttpClient http
+
+@*os 3 de baixo é para inicializar o toast*@
+@using PortalAlunoWeb_Front.Service
+@using PortalAlunoWeb_Domain.Enumerador
+@inject ToastService toastService
 
 <div class="row border-bottom white-bg dashboard-header">
     <div class="col-sm-8">
@@ -37,15 +42,15 @@
                             @foreach (var cliente in clientes)
                             {
                                 <tr>
-                                    <td> @cliente.idCliente</td>
-                                    <td><span class="line">@cliente.nome</span></td>
+                                    <td> @cliente.COD_CLIENTE</td>
+                                    <td><span class="line">@cliente.NOME_CLIENTE</span></td>
                                     <td class="text-navy">
-                                        <button class="btn btn-warning btn-circle"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>
+                                        <button class="btn btn-warning btn-circle" @onclick="@(() => navigation.NavigateTo("/Cliente/Editar/" +@cliente.COD_CLIENTE))"><i class="fa fa-pencil-square-o"></i></button>
+                                        <button class="btn btn-danger btn-circle" @onclick="@(() => ExcluirCliente(@cliente.COD_CLIENTE))"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
                             }
-                            
+
                         </tbody>
                     </table>
 
@@ -81,8 +86,16 @@
         await ListarClientes();
     }
     async Task ListarClientes()
-        {
-            clientes = await http.GetFromJsonAsync<List<Cliente>>("https://localhost:7133/Cliente");
-            StateHasChanged();
-        }
+    {
+        clientes = await http.GetJsonAsync<List<Cliente>>("https://localhost:7126/api/cliente");
+        StateHasChanged();
+    }
+
+    void ExcluirCliente(int CdCliente)
+    {
+        clientes.RemoveAll(x => x.COD_CLIENTE == CdCliente);
+        toastService.ShowToast("Cliente excluido com Sucesso!", ToastLevel.Success);
+        StateHasChanged();
+        //criar chamada na API com http DELETE aqui em baixo 
+    }
 }

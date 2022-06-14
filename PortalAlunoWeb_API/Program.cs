@@ -27,6 +27,7 @@ builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<IMateriaService, MateriaService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IComercioService, ComercioService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 
 
@@ -36,6 +37,8 @@ builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
 builder.Services.AddScoped<IMateriaRepository, MateriaRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IComercioRepository, ComercioRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+
 
 
 

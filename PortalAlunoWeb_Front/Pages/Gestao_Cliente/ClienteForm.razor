@@ -2,6 +2,7 @@
 @inject NavigationManager navigation
 @inject HttpClient http
 
+
 <EditForm Model="@Cliente" OnValidSubmit="EnviarFormCliente">
 
     <h2>Informações do Cliente</h2>
@@ -14,14 +15,14 @@
             <label class="col-md-2 control-label required">Nome:</label>
 
             <div class="col-lg-4">
-                <TextEdit @bind-Text="Cliente.nome"></TextEdit>
+                <TextEdit @bind-Text="Cliente.NOME_CLIENTE"></TextEdit>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label required">E-Mail:</label>
             <div class="col-lg-4">
-                <InputText @bind-Value="Cliente.email" class="form-control"></InputText>
+                <InputText @bind-Value="Cliente.EMAIL_CLIENTE" class="form-control"></InputText>
             </div>
         </div>
 
@@ -38,6 +39,7 @@
         </div>
 
 </EditForm>
+
 
 @code {
     [Parameter]
