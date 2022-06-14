@@ -11,6 +11,10 @@ namespace PortalAlunoWeb_DataAccess.Dapper.Interface
     {
         public Task<List<Comercio>> BuscarTodosComercios();
         public Task<ReturnObject> SalvarComercio(Comercio comercio);
+        Task<List<Comercio>> BuscarComercioPorID(int id);
+        void AtualizarComercio(Comercio cliente);
+        void ExcluirComercio(int IdComercio);
+        public Task<List<Comercio>> BuscarComercioPorNome(string NOME_COMERCIO);
 
     }
 }

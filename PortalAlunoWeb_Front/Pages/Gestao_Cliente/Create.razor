@@ -1,0 +1,74 @@
+﻿@page "/cliente/novo"
+@using PortalAlunoWeb_Domain.Enumerador
+@using PortalAlunoWeb_Front.Shared
+@using PortalAlunoWeb_Front.Data
+@inject HttpClient http
+@inject ToastService toastService
+@inject NavigationManager navigation
+
+<div class="row border-bottom white-bg dashboard-header">
+    <div class="col-sm-8">
+        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Criação de Cliente"></BarNavegation>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <ClienteForm Cliente="cliente" ButtonTextCancelar="Cancelar" ButtonTextSubmit="Criar" EnviarFormCliente="OnSalvarCliente"></ClienteForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+    public Cliente cliente = new Cliente();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BreadCrumb breadCrumb = new BreadCrumb
+            {
+                Address = "/",
+                Title = "Início",
+                IsActive = false,
+                OrderIndex = 1
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        breadCrumb = new BreadCrumb
+            {
+                Address = "/Cliente",
+                Title = "Gestão de Cliente",
+                IsActive = false,
+                OrderIndex = 2
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        breadCrumb = new BreadCrumb
+            {
+                Address = "/Cliente",
+                Title = "Criação de Cliente",
+                IsActive = true,
+                OrderIndex = 3
+            };
+        breadcrumbLinks.Add(breadCrumb);
+    }
+
+    public void OnSalvarCliente()
+    {
+        try
+        {
+            http.PostAsJsonAsync("https://localhost:7126/api/cliente", cliente);
+
+            toastService.ShowToast("Cliente cadastrado com Sucesso!", ToastLevel.Success);
+
+            navigation.NavigateTo("/Cliente");
+        }
+        catch
+        {
+            toastService.ShowToast("Ocorreu um erro", ToastLevel.Error);
+
+        }
+    }
+}

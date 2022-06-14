@@ -1,0 +1,43 @@
+﻿@page "/cliente/Editar/{id}"
+@using PortalAlunoWeb_Front.Shared
+@using PortalAlunoWeb_Front.Data
+
+<div class="row border-bottom white-bg dashboard-header">
+    <div class="col-sm-8">
+        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Criação de Cliente"></BarNavegation>
+    </div>
+</div>
+<ClienteForm></ClienteForm>
+@code {
+    public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BreadCrumb breadCrumb = new BreadCrumb
+            {
+                Address = "/",
+                Title = "Início",
+                IsActive = false,
+                OrderIndex = 1
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        breadCrumb = new BreadCrumb
+            {
+                Address = "/Cliente",
+                Title = "Gestão de Cliente",
+                IsActive = false,
+                OrderIndex = 2
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        breadCrumb = new BreadCrumb
+            {
+                Address = "/Cliente",
+                Title = "Alteração de Cliente",
+                IsActive = true,
+                OrderIndex = 3
+            };
+        breadcrumbLinks.Add(breadCrumb);
+    }
+}

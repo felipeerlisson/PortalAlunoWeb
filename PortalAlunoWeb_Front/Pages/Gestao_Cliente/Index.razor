@@ -1,0 +1,88 @@
+﻿@page "/cliente"
+@inherits LayoutComponentBase
+@using PortalAlunoWeb_Front.Shared
+@using PortalAlunoWeb_Front.Data
+@inject NavigationManager navigation
+@inject HttpClient http;
+
+<div class="row border-bottom white-bg dashboard-header">
+    <div class="col-sm-8">
+        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Gestão de Cliente"></BarNavegation>
+    </div>
+    <div class="col-sm-4">
+        <div class="title-action">
+            <button class="btn btn-primary" @onclick="@(() => navigation.NavigateTo("Cliente/Novo"))"> Novo</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <h2> Lista de Clientes</h2>
+                    <div class="hr-line-dashed"></div>
+
+                    <br />
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Cliente</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cliente in clientes)
+                            {
+                                <tr>
+                                    <td> @cliente.idCliente</td>
+                                    <td><span class="line">@cliente.nome</span></td>
+                                    <td class="text-navy">
+                                        <button class="btn btn-warning btn-circle"><i class="fa fa-pencil-square-o"></i></button>
+                                        <button class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
+    public List<Cliente> clientes = new List<Cliente>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BreadCrumb breadCrumb = new BreadCrumb
+            {
+                Address = "/",
+                Title = "Início",
+                IsActive = false,
+                OrderIndex = 1
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        breadCrumb = new BreadCrumb
+            {
+                Address = "/Cliente",
+                Title = "Gestão de Clientes",
+                IsActive = true,
+                OrderIndex = 2
+            };
+        breadcrumbLinks.Add(breadCrumb);
+
+        await ListarClientes();
+    }
+    async Task ListarClientes()
+        {
+            clientes = await http.GetFromJsonAsync<List<Cliente>>("https://localhost:7133/Cliente");
+            StateHasChanged();
+        }
+}
