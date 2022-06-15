@@ -1,14 +1,14 @@
 ﻿@using Data
 @inject NavigationManager navigation
 @inject HttpClient http
-
+@inject IJSRuntime js
 
 <EditForm Model="@Cliente" OnValidSubmit="EnviarFormCliente">
 
     <h2>Informações do Cliente</h2>
     <div class="hr-line-dashed"></div>
     <br />
-
+    
     <form class="form-horizontal">
 
         <div class="form-group">
@@ -26,6 +26,50 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-sm-2 control-label required">CEP:</label>
+            <div class="col-sm-4">
+                <InputText @bind-Value="Cliente.Endereco.cep" class="form-control" id="CEP" maxlength="8" placeholder="00000-000" autocomplete="off" @onkeyup="MascaraCEP" @onfocusout="PesquisaViaCep"></InputText>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label required">Logradouro:</label>
+            <div class="col-sm-4">
+                <InputText @bind-Value="Cliente.Endereco.logradouro" class="form-control"></InputText>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label required">Número:</label>
+            <div class="col-sm-2">
+                <InputText @bind-Value="Cliente.Endereco.numero" class="form-control"></InputText>
+            </div>
+
+            <label class="col-sm-2 control-label">Complemento:</label>
+            <div class="col-sm-2">
+                <InputText @bind-Value="Cliente.Endereco.complemento" class="form-control" style="text-transform:uppercase"></InputText>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label required">Bairro:</label>
+            <div class="col-sm-4">
+                <InputText @bind-Value="Cliente.Endereco.bairro" class="form-control"></InputText>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label required">Cidade:</label>
+            <div class="col-sm-4">
+                <InputText @bind-Value="Cliente.Endereco.localidade" class="form-control"></InputText>
+            </div>
+
+            <label class="col-sm-2 control-label required" form="ESTADO"> Estado: </label>
+            <div class="col-sm-2">
+                <InputText @bind-Value="Cliente.Endereco.uf" class="form-control" maxlength="2" autocomplete="off" style="text-transform:uppercase" />
+            </div>
+        </div>
 
     </form>
 
@@ -50,4 +94,30 @@
     public string ButtonTextSubmit { get; set; }
     [Parameter]
     public EventCallback EnviarFormCliente { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cliente.Endereco = new Endereco();
+    }
+
+
+    public async Task MascaraCEP(KeyboardEventArgs e)
+    {
+        char.TryParse(e.Key, out char tecla);
+
+        if (char.IsLetter(tecla))
+        {
+            await js.InvokeVoidAsync("LimparCampo", "CEP");
+        }
+        else
+        {
+            await js.InvokeVoidAsync("MascaraCEP", "CEP");
+        }
+    }
+
+    private async Task PesquisaViaCep()
+    {
+        Cliente.Endereco = await http.GetJsonAsync<Endereco>("https://viacep.com.br/ws/" + Cliente.Endereco.cep + "/json/");
+        StateHasChanged();
+    }
 }

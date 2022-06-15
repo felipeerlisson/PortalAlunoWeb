@@ -75,19 +75,19 @@ namespace PortalAlunoWeb_DataAccess.Dapper
 
         public async Task<List<Cliente>> BuscarTodosClientes()
         {
-            try 
+            try
             {
-                using (IDbConnection dbConnection = Connection) 
+                using (IDbConnection dbConnection = Connection)
                 {
-                dbConnection.Open();
-                string Query = "SELECT * FROM CLIENTE";
-                dbConnection.Close();
-                    return (List<Cliente>) await dbConnection.QueryAsync<Cliente>(Query);
+                    dbConnection.Open();
+                    string Query = "SELECT * FROM CLIENTE WHERE DATA_EXCLUSAO IS NULL";
+                    dbConnection.Close();
+                    return (List<Cliente>)await dbConnection.QueryAsync<Cliente>(Query);
                 }
             }
-            catch 
-            { 
-                throw; 
+            catch
+            {
+                throw;
             }
         }
 
@@ -98,7 +98,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string Query = "DELETE CLIENTE WHERE COD_CLIENTE=@IdCliente";
+                    string Query = "UPDATE CLIENTE SET DATA_EXCLUSAO= GETDATE() WHERE COD_CLIENTE=@IdCliente";
                     dbConnection.Close();
                     dbConnection.Execute(Query, new { IdCliente = @IdCliente });
                 }
@@ -116,10 +116,11 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string query = @"INSERT INTO CLIENTE(NOME_CLIENTE, EMAIL_CLIENTE) VALUES(@NOME_CLIENTE, @EMAIL_CLIENTE)";
+                    string query = @$"INSERT INTO CLIENTE(NOME_CLIENTE, EMAIL_CLIENTE, CEP, LOGRADOURO, NUMERO,  BAIRRO, LOCALIDADE, UF) 
+                     VALUES('{cliente.NOME_CLIENTE}', '{cliente.EMAIL_CLIENTE}','{cliente.Endereco.cep}', '{cliente.Endereco.logradouro}', {cliente.Endereco.numero}, '{cliente.Endereco.bairro}', '{cliente.Endereco.localidade}', '{cliente.Endereco.uf}')";
                     dbConnection.Close();
                     dbConnection.Execute(query, cliente);
-
+                    
                 }
             }
             catch

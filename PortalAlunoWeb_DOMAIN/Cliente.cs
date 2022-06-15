@@ -11,5 +11,15 @@ namespace PortalAlunoWeb_Domain
         public int COD_CLIENTE { get; set; }
         public string NOME_CLIENTE { get; set; }
         public string EMAIL_CLIENTE { get; set; }
+        public string CEP { get; set; }
+        public string logradouro { get; set; }
+        public int Numero { get; set; }
+        public string Bairro { get; set; }
+        public string Localidade { get; set; }
+
+        public string UF { get; set; }
+
+        public Endereco Endereco { get; set; }
+
     }
 }

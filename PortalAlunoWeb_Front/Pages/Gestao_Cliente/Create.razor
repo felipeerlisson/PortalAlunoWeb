@@ -59,7 +59,7 @@
     {
         try
         {
-            http.PostAsJsonAsync("https://localhost:7126/api/cliente", cliente);
+            http.PostJsonAsync("https://localhost:7126/api/cliente", cliente);
 
             toastService.ShowToast("Cliente cadastrado com Sucesso!", ToastLevel.Success);
 
