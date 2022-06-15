@@ -8,13 +8,13 @@ namespace PortalAlunoWeb_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController: ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly IClienteService _clienteService;
 
         public ClienteController(IClienteService clienteservice)
-        { 
-            _clienteService = clienteservice; 
+        {
+            _clienteService = clienteservice;
         }
 
 
@@ -25,13 +25,13 @@ namespace PortalAlunoWeb_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Cliente> Get(int id) 
-        { 
-            return await _clienteService.BuscarClientePorID(id); 
+        public async Task<Cliente> Get(int id)
+        {
+            return await _clienteService.BuscarClientePorID(id);
         }
 
         [HttpPost]
-        public async Task<ReturnObject> Post(Cliente cliente) 
+        public async Task<ReturnObject> Post(Cliente cliente)
         {
             return await _clienteService.SalvarCliente(cliente);
         }
@@ -41,6 +41,11 @@ namespace PortalAlunoWeb_Api.Controllers
         public async Task<ReturnObject> Put([FromBody] Cliente cliente)
         {
             return await _clienteService.AtualizarCliente(cliente);
+        }
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _clienteService.ExcluirCliente(id);
         }
     }
 }

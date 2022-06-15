@@ -100,6 +100,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                     dbConnection.Open();
                     string Query = "DELETE CLIENTE WHERE COD_CLIENTE=@IdCliente";
                     dbConnection.Close();
+                    dbConnection.Execute(Query, new { IdCliente = @IdCliente });
                 }
             }
             catch
