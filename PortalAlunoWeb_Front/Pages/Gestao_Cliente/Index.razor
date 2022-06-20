@@ -30,29 +30,37 @@
                     <div class="hr-line-dashed"></div>
 
                     <br />
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Cliente</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var cliente in clientes)
-                            {
+                    @if (clientes.Any())
+                    {
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td> @cliente.COD_CLIENTE</td>
-                                    <td><span class="line">@cliente.NOME_CLIENTE</span></td>
-                                    <td class="text-navy">
-                                        <button class="btn btn-warning btn-circle" @onclick="@(() => navigation.NavigateTo("/Cliente/Editar/" +@cliente.COD_CLIENTE))"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger btn-circle" @onclick="@(() => ExcluirCliente(@cliente.COD_CLIENTE))"><i class="fa fa-trash-o"></i></button>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Ações</th>
                                 </tr>
-                            }
+                            </thead>
+                            <tbody>
+                                @foreach (var cliente in clientes)
+                                {
+                                    <tr>
+                                        <td> @cliente.COD_CLIENTE</td>
+                                        <td><span class="line">@cliente.NOME_CLIENTE</span></td>
+                                        <td class="text-navy">
+                                            <button class="btn btn-warning btn-circle" @onclick="@(() => navigation.NavigateTo("/Cliente/Editar/" +@cliente.COD_CLIENTE))"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button class="btn btn-danger btn-circle" @onclick="@(() => ExcluirCliente(@cliente.COD_CLIENTE))"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                }
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <h3>Clientes não Cadastrado!</h3>
+                    }
+
 
                 </div>
             </div>

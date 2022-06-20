@@ -22,7 +22,7 @@ namespace PortalAlunoWeb_Services
 
         public async Task<ReturnObject> AtualizarCliente(Cliente cliente)
         {
-           return await _clienteRepository.AtualizarCliente(cliente);
+            return await _clienteRepository.AtualizarCliente(cliente);
         }
 
         public async Task<Cliente> BuscarClientePorID(int id)
@@ -40,22 +40,9 @@ namespace PortalAlunoWeb_Services
             _clienteRepository.ExcluirCliente(IdCliente);
         }
 
-        public async Task<ReturnObject> SalvarCliente(Cliente cliente)
+        public void SalvarCliente(Cliente cliente)
         {
-            ReturnObject returnObject = new ReturnObject();
-            try { 
-                _clienteRepository.SalvarCliente(cliente);
-                returnObject.Mensagem="Cliente Cadastrado com sucesso";
-                returnObject.Sucesso = true;
-                return returnObject;
-            }
-            catch {
-
-                returnObject.Mensagem = "Falha ao cadastrar Cliente";
-                returnObject.Sucesso = false;
-                return returnObject;
-
-            }
+            _clienteRepository.SalvarCliente(cliente);
         }
     }
 }

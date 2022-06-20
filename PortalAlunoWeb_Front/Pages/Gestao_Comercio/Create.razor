@@ -71,11 +71,12 @@
 
         try
         {
+            comercio.Endereco.numero = comercio.Numero; 
             http.PostAsJsonAsync("https://localhost:7126/api/comercio", comercio);
             toastService.ShowToast("Comércio criado com sucesso!", ToastLevel.Success);
             navigation.NavigateTo("Comercio");
         }
-        catch
+        catch(Exception ex)
         {
              toastService.ShowToast("Ocorreu um erro", ToastLevel.Error);
 

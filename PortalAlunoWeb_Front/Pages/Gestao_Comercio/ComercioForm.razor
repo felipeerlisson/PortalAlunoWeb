@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 
 
-<EditForm Model="@Comercio" OnValidSubmit="@EnviarFormComercio">
+<EditForm Model="Comercio" OnValidSubmit="@EnviarFormComercio">
 
     <h2>Informações do Comércio</h2>
     <div class="hr-line-dashed"></div>
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label required">Número:</label>
             <div class="col-sm-2">
-                <InputText @bind-Value="Comercio.Endereco.numero" class="form-control"></InputText>
+                <InputText @bind-Value="Comercio.Numero" class="form-control"></InputText>
             </div>
 
             <label class="col-sm-2 control-label">Complemento:</label>
@@ -121,6 +121,13 @@
     private async Task PesquisaViaCep()
     {
         Comercio.Endereco = await http.GetJsonAsync<Endereco>("https://viacep.com.br/ws/" + Comercio.Endereco.cep + "/json/");
+        Comercio.CEP = Comercio.Endereco.cep;
+        Comercio.Bairro = Comercio.Endereco.bairro;
+        Comercio.UF = Comercio.Endereco.uf;
+        Comercio.Localidade = Comercio.Endereco.localidade;
+        Comercio.logradouro = Comercio.Endereco.logradouro;
+
+
         StateHasChanged();
     }
 }

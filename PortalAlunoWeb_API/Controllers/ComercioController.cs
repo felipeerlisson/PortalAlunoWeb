@@ -36,7 +36,6 @@ namespace PortalAlunoWeb_Api.Controllers
         [HttpPost]
         public async Task<ReturnObject> Post([FromBody] Comercio comercio)
         {
-
             return await  _comercioService.SalvarComercio(comercio);
         }
 

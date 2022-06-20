@@ -10,42 +10,43 @@ namespace PortalAlunoWeb_Api.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private readonly IClienteService _clienteService;
-
-        public ClienteController(IClienteService clienteservice)
+        protected readonly IClienteService _clienteService;
+        public ClienteController(IClienteService clienteService)
         {
-            _clienteService = clienteservice;
-        }
-
-
+            _clienteService = clienteService;
+        }    
+        
+        // GET: api/<ClienteController>
         [HttpGet]
         public async Task<List<Cliente>> Get()
         {
             return await _clienteService.BuscarTodosClientes();
         }
 
+        // GET api/<ClienteController>/5
         [HttpGet("{id}")]
-        public async Task<Cliente> Get(int id)
+        public string Get(int id)
         {
-            return await _clienteService.BuscarClientePorID(id);
+            return "value";
         }
 
+        // POST api/<ClienteController>
         [HttpPost]
-        public async Task<ReturnObject> Post(Cliente cliente)
+        public void Post([FromBody] Cliente cliente)
         {
-            return await _clienteService.SalvarCliente(cliente);
+            _clienteService.SalvarCliente(cliente);
         }
 
-        // PUT api/<ProdutoController>/5
-        [HttpPut]
-        public async Task<ReturnObject> Put([FromBody] Cliente cliente)
+        // PUT api/<ClienteController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
         {
-            return await _clienteService.AtualizarCliente(cliente);
         }
+
+        // DELETE api/<ClienteController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _clienteService.ExcluirCliente(id);
         }
     }
 }

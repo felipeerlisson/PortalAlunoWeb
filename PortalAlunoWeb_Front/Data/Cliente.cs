@@ -5,6 +5,7 @@
         public int COD_CLIENTE { get; set; }
         public string NOME_CLIENTE { get; set; }
         public string EMAIL_CLIENTE { get; set; }
+
         public Endereco Endereco { get; set; } = new Endereco();
     }
 }
