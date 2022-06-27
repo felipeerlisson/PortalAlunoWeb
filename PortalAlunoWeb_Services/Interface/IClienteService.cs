@@ -10,9 +10,9 @@ namespace PortalAlunoWeb_Services.Interface
      public interface IClienteService
     {
         public Task<List<Cliente>> BuscarTodosClientes();
-        Task<Cliente> BuscarClientePorID(int id);
-        void SalvarCliente(Cliente cliente);
-        Task<ReturnObject> AtualizarCliente(Cliente cliente);
+        public Task<Cliente> BuscarClientePorID(int id);
+        public Task<ReturnObject> SalvarCliente(Cliente cliente);
+        public Task<ReturnObject> AtualizarCliente(Cliente cliente);
         void ExcluirCliente(int IdCliente);
     }
 }

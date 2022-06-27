@@ -15,17 +15,11 @@ namespace PortalAlunoWeb_Services
         public ProfessorService(IProfessorRepository professorRepository)
           {
             _professorRepository=professorRepository;
-
-        }
-
-        public void AtualizarProfessor(Professor professor)
-        {
-            _professorRepository.atualizarProfessor(professor);
         }
 
         public void atualizarProfessor(Professor professor)
         {
-            throw new NotImplementedException();
+            _professorRepository.atualizarProfessor(professor);
         }
 
         public async Task<Professor> BuscarProfessorPorId(int Id)

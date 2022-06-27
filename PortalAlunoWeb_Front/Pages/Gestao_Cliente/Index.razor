@@ -47,7 +47,7 @@
                                         <td> @cliente.COD_CLIENTE</td>
                                         <td><span class="line">@cliente.NOME_CLIENTE</span></td>
                                         <td class="text-navy">
-                                            <button class="btn btn-warning btn-circle" @onclick="@(() => navigation.NavigateTo("/Cliente/Editar/" +@cliente.COD_CLIENTE))"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button class="btn btn-warning btn-circle" @onclick="@(() =>AtualizarCliente(@cliente))"><i class="fa fa-pencil-square-o"></i></button>
                                             <button class="btn btn-danger btn-circle" @onclick="@(() => ExcluirCliente(@cliente.COD_CLIENTE))"><i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
@@ -95,16 +95,22 @@
     }
     async Task ListarClientes()
     {
-        clientes = await http.GetJsonAsync<List<Cliente>>("https://localhost:7126/api/cliente");
+        clientes = await http.GetFromJsonAsync<List<Cliente>>("https://localhost:7126/api/Cliente");
         StateHasChanged();
+    }
+
+    public Cliente AtualizarCliente(Cliente cliente)
+    {
+        navigation.NavigateTo("/Cliente/Editar/" + cliente.COD_CLIENTE);
+        return cliente;
     }
 
     void ExcluirCliente(int CdCliente)
     {
         clientes.RemoveAll(x => x.COD_CLIENTE == CdCliente);
         toastService.ShowToast("Cliente excluido com Sucesso!", ToastLevel.Success);
-        StateHasChanged();
         //criar chamada na API com http DELETE aqui em baixo
         http.DeleteAsync("https://localhost:7126/api/cliente/" + CdCliente);
+        StateHasChanged();
     }
 }

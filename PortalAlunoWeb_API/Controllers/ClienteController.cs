@@ -14,39 +14,38 @@ namespace PortalAlunoWeb_Api.Controllers
         public ClienteController(IClienteService clienteService)
         {
             _clienteService = clienteService;
-        }    
-        
+        }
         // GET: api/<ClienteController>
         [HttpGet]
         public async Task<List<Cliente>> Get()
         {
             return await _clienteService.BuscarTodosClientes();
         }
-
         // GET api/<ClienteController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Cliente> Get(int id)
         {
-            return "value";
+            return await _clienteService.BuscarClientePorID(id);
         }
 
         // POST api/<ClienteController>
         [HttpPost]
-        public void Post([FromBody] Cliente cliente)
+        public async Task<ReturnObject> Post([FromBody] Cliente cliente)
         {
-            _clienteService.SalvarCliente(cliente);
+            return await _clienteService.SalvarCliente(cliente);
         }
-
         // PUT api/<ClienteController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ReturnObject> Put([FromBody] Cliente cliente)
         {
+            return await _clienteService.AtualizarCliente(cliente);
         }
 
         // DELETE api/<ClienteController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _clienteService.ExcluirCliente(id);
         }
     }
 }

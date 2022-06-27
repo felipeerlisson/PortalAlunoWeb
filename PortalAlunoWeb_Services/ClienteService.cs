@@ -1,4 +1,4 @@
-﻿using PortalAlunoWeb_DataAccess.Dapper.Interface;
+﻿ using PortalAlunoWeb_DataAccess.Dapper.Interface;
 using PortalAlunoWeb_Domain;
 using PortalAlunoWeb_Services.Interface;
 using System;
@@ -34,15 +34,13 @@ namespace PortalAlunoWeb_Services
         {
             return await _clienteRepository.BuscarTodosClientes();
         }
-
         public void ExcluirCliente(int IdCliente)
         {
             _clienteRepository.ExcluirCliente(IdCliente);
         }
-
-        public void SalvarCliente(Cliente cliente)
+        public async Task<ReturnObject> SalvarCliente(Cliente cliente)
         {
-            _clienteRepository.SalvarCliente(cliente);
+            return await _clienteRepository.SalvarCliente(cliente);
         }
     }
 }

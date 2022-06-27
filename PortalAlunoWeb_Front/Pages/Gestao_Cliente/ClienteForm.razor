@@ -43,7 +43,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label required">Número:</label>
             <div class="col-sm-2">
-                <InputText @bind-Value="Cliente.Endereco.numero" class="form-control"></InputText>
+                <InputText @bind-Value="Cliente.NUMERO" class="form-control"></InputText>
             </div>
 
             <label class="col-sm-2 control-label">Complemento:</label>
@@ -118,6 +118,11 @@
     private async Task PesquisaViaCep()
     {
         Cliente.Endereco = await http.GetJsonAsync<Endereco>("https://viacep.com.br/ws/" + Cliente.Endereco.cep + "/json/");
+        Cliente.CEP = Cliente.Endereco.cep;
+        Cliente.BAIRRO = Cliente.Endereco.bairro;
+        Cliente.UF = Cliente.Endereco.uf;
+        Cliente.LOCALIDADE = Cliente.Endereco.localidade;
+        Cliente.LOGRADOURO = Cliente.Endereco.logradouro;
         StateHasChanged();
     }
 }

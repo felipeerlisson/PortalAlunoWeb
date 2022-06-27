@@ -11,7 +11,7 @@
 
 <div class="row border-bottom white-bg dashboard-header">
     <div class="col-sm-8">
-        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Criação de Cliente"></BarNavegation>
+        <BarNavegation breadCrumb="@breadcrumbLinks" Title="Atualização de Cliente"></BarNavegation>
     </div>
 </div>
 
@@ -20,7 +20,7 @@
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox-content p-xl">
                 <div class="row">
-                    <ClienteForm Cliente="cliente" ButtonTextCancelar="Cancelar" ButtonTextSubmit="Atualizar" EnviarFormCliente="AtualizarCliente"></ClienteForm>
+                    <ClienteForm Cliente="cliente" ButtonTextCancelar="Cancelar" ButtonTextSubmit="Atualizar" EnviarFormCliente="BuscarClientePorId"></ClienteForm>
                 </div>
             </div>
         </div>
@@ -28,8 +28,6 @@
 </div>
 
 @code {
-
-
     [Parameter]
     public string id { get; set; }
 
@@ -38,7 +36,6 @@
     public List<BreadCrumb> breadcrumbLinks = new List<BreadCrumb>();
 
     public ReturnObject retorno = new ReturnObject();
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,30 +68,35 @@
 
         if (id != "0" && id != "")
         {
-            BuscarClientePorId();
+            await BuscarClientePorId();
         }
     }
-
-    async void BuscarClientePorId()
+    public async Task<Cliente> BuscarClientePorId()
     {
-        cliente = await http.GetJsonAsync<Cliente>("https://localhost:7126/api/cliente/" + id);
+        cliente = await http.GetFromJsonAsync<Cliente>("https://localhost:7126/api/cliente/" + id);
+        cliente.Endereco.cep=cliente.CEP;
+        cliente.Endereco.logradouro=cliente.LOGRADOURO;
+        cliente.Endereco.numero=cliente.NUMERO;
+        cliente.Endereco.localidade=cliente.LOCALIDADE;
+        cliente.Endereco.bairro=cliente.BAIRRO;
+        cliente.Endereco.uf = cliente.UF;
+        return cliente;
         StateHasChanged();
     }
-
-    async void AtualizarCliente()
+    public async Task<ReturnObject> AtualizarCliente()
     {
-        retorno = await http.PutJsonAsync<ReturnObject>("https://localhost:7126/api/cliente/", cliente);
-
-        if (retorno.Sucesso)
+        try
         {
-            toastService.ShowToast(retorno.Mensagem, ToastLevel.Success);
-            navigation.NavigateTo("Cliente");
+            retorno = await http.PutJsonAsync<ReturnObject>("https://localhost:7126/api/cliente/",cliente);
+            toastService.ShowToast("Cliente criado com sucesso!", ToastLevel.Success);
+            navigation.NavigateTo("cliente");
+            return retorno;
         }
-        else
+        catch (Exception ex)
         {
-            toastService.ShowToast(retorno.Mensagem, ToastLevel.Error);
+            toastService.ShowToast("Ocorreu um erro", ToastLevel.Error);
+            return retorno;
         }
 
     }
-
 }

@@ -11,7 +11,6 @@
         public string Numero { get; set; } = "";
         public string Bairro { get; set; } = "";
         public string Localidade { get; set; } = "";
-
         public string UF { get; set; } = "";
 
         public Endereco Endereco { get; set; } = new Endereco();

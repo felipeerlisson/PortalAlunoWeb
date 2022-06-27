@@ -111,7 +111,7 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             try
             {
                 using (IDbConnection dbConnection = Connection)
-                {
+                { 
                     dbConnection.Open();
                     string query = @"INSERT INTO PROFESSOR(NOME_PROFESSOR, IDADE_PROFESSOR) VALUES(@NOME_PROFESSOR, @IDADE_PROFESSOR)";
                     dbConnection.Close();

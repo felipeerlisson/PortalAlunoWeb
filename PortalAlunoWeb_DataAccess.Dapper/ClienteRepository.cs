@@ -37,11 +37,11 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             {
 
                 using (IDbConnection dbConnection = Connection)
-                {
+                { 
                     dbConnection.Open();
-                    string Query = "UPDATE CLIENTE SET NOME_CLIENTE=@NOME_CLIENTE,EMAIL_CLIENTE=@EMAIL_CLIENTE WHERE COD_CLIENTE=@COD_CLIENTE";
+                    string Query = @$"UPDATE CLIENTE SET NOME_CLIENTE='{cliente.NOME_CLIENTE}', EMAIL_CLIENTE='{cliente.EMAIL_CLIENTE}', CEP='{cliente.Endereco.cep}', LOGRADOURO='{cliente.Endereco.logradouro}', NUMERO='{cliente.Endereco.numero}',  BAIRRO='{cliente.Endereco.bairro}', LOCALIDADE='{cliente.Endereco.localidade}', UF='{cliente.Endereco.uf}' WHERE COD_CLIENTE='{cliente.COD_CLIENTE}'";
                     dbConnection.Close();
-                    dbConnection.Execute(Query, cliente);
+                    dbConnection.Execute(Query , cliente);
                 }
                 retorno.Mensagem = "Cliente atualizado com sucesso!";
                 retorno.Sucesso = true;
@@ -62,9 +62,9 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    string Query = "SELECT * FROM CLIENTE where COD_CLIENTE = @id";
+                    string Query = "SELECT * FROM CLIENTE WHERE COD_CLIENTE = @id";
                     dbConnection.Close();
-                    return await dbConnection.QueryFirstAsync<Cliente>(Query, new { id = @id });
+                    return await dbConnection.QueryFirstAsync<Cliente>(Query,new { id = @id });
                 }
             }
             catch
@@ -72,7 +72,6 @@ namespace PortalAlunoWeb_DataAccess.Dapper
                 throw;
             }
         }
-
         public async Task<List<Cliente>> BuscarTodosClientes()
         {
             try
@@ -109,23 +108,26 @@ namespace PortalAlunoWeb_DataAccess.Dapper
             }
         }
 
-        public void SalvarCliente(Cliente cliente)
+        public async Task<ReturnObject> SalvarCliente(Cliente cliente)
         {
+            ReturnObject returnObject = new ReturnObject();
             try
             {
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
                     string query = @$"INSERT INTO CLIENTE(NOME_CLIENTE, EMAIL_CLIENTE, CEP, LOGRADOURO, NUMERO,  BAIRRO, LOCALIDADE, UF) 
-                     VALUES('{cliente.NOME_CLIENTE}', '{cliente.EMAIL_CLIENTE}','{cliente.Endereco.cep}', '{cliente.Endereco.logradouro}', {cliente.Endereco.numero}, '{cliente.Endereco.bairro}', '{cliente.Endereco.localidade}', '{cliente.Endereco.uf}')";
+                     VALUES('{cliente.NOME_CLIENTE}', '{cliente.EMAIL_CLIENTE}','{cliente.Endereco.cep}', '{cliente.Endereco.logradouro}', '{cliente.Endereco.numero}', '{cliente.Endereco.bairro}','{cliente.Endereco.localidade}', '{cliente.Endereco.uf}')";
                     dbConnection.Close();
-                    dbConnection.Execute(query, cliente);
-                    
+                    dbConnection.Execute(query); 
+
+                    returnObject.Sucesso = true;
+                    return returnObject;
                 }
             }
             catch
             {
-                throw;
+                return returnObject;
             }
         }
     }

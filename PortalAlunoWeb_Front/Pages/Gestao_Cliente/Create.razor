@@ -57,8 +57,17 @@
 
     public void OnSalvarCliente()
     {
-        http.PostAsJsonAsync("https://localhost:7126/api/Cliente", cliente);
-        toastService.ShowToast("Cliente cadastrado com Sucesso!", ToastLevel.Success);
-        navigation.NavigateTo("/Cliente");       
+        try
+        {
+            cliente.Endereco.numero = cliente.NUMERO;
+            http.PostAsJsonAsync("https://localhost:7126/api/cliente", cliente);
+            toastService.ShowToast("Cliente criado com sucesso!", ToastLevel.Success);
+            navigation.NavigateTo("cliente");
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowToast("Ocorreu um erro", ToastLevel.Error);
+
+        }
     }
 }
