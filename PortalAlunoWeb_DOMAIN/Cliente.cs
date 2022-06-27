@@ -18,7 +18,7 @@ namespace PortalAlunoWeb_Domain
         public string Bairro { get; set; }
         public string Localidade { get; set; }
         public string UF { get; set; }
-        public Endereco Endereco { get; set; }
+        public Endereco Endereco { get; set; } = new Endereco();
 
     }
 }
